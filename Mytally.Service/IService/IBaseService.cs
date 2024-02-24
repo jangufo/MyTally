@@ -1,7 +1,7 @@
 ﻿using SqlSugar;
 using System.Linq.Expressions;
 
-namespace Mytally.Service.IService;
+namespace MyTally.Service.IService;
 
 public interface IBaseService<TEntity>
     where TEntity : class, new()

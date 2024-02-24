@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Mytally.Models;
+using MyTally.Models;
 
-namespace Mytally.Repository.IRepository;
+namespace MyTally.Repository.IRepository;
 
 public interface ITypeInfoDefRespository : IBaseRepository<TypeInfoDef> { }

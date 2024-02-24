@@ -1,4 +1,4 @@
-﻿namespace Mytally.Models;
+﻿namespace MyTally.Models;
 
 public class ImageList : BaseId
 {

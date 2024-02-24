@@ -1,7 +1,7 @@
 ﻿using SqlSugar;
 using System.Linq.Expressions;
 
-namespace Mytally.Repository.IRepository;
+namespace MyTally.Repository.IRepository;
 
 public interface IBaseRepository<TEntity>
     where TEntity : class, new()

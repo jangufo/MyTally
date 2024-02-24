@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using SqlSugar;
 
-namespace Mytally.Models;
+namespace MyTally.Models;
 
 public class TypeInfoDef : BaseId
 {

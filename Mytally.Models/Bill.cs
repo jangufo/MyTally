@@ -1,6 +1,6 @@
 ﻿using SqlSugar;
 
-namespace Mytally.Models;
+namespace MyTally.Models;
 
 public class Bill : BaseId
 {

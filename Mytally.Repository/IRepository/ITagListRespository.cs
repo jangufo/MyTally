@@ -1,5 +1,5 @@
-﻿using Mytally.Models;
+﻿using MyTally.Models;
 
-namespace Mytally.Repository.IRepository;
+namespace MyTally.Repository.IRepository;
 
 public interface ITagListRespository : IBaseRepository<TagList> { }

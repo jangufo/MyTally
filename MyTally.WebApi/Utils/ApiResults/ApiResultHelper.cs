@@ -2,7 +2,7 @@
 
 namespace MyTally.WebApi.Utils.ApiResults;
 
-public static class ApiResultHeaper
+public static class ApiResultHelper
 {
     public static ApiResult Success(dynamic data)
     {

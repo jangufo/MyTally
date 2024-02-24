@@ -1,10 +1,10 @@
-﻿using Mytally.Models;
-using Mytally.Repository.IRepository;
+﻿using MyTally.Models;
 using SqlSugar;
 using SqlSugar.IOC;
 using System.Linq.Expressions;
+using MyTally.Repository.IRepository;
 
-namespace Mytally.Repository.Repository;
+namespace MyTally.Repository.Repository;
 
 public class BaseRepository<TEntity> : SimpleClient<TEntity>, IBaseRepository<TEntity>
     where TEntity : class, new()

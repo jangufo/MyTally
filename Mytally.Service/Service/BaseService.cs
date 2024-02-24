@@ -1,9 +1,9 @@
-﻿using Mytally.Repository.IRepository;
-using Mytally.Service.IService;
-using SqlSugar;
+﻿using SqlSugar;
 using System.Linq.Expressions;
+using MyTally.Repository.IRepository;
+using MyTally.Service.IService;
 
-namespace Mytally.Service.Servce;
+namespace MyTally.Service.Service;
 
 public class BaseService<TEntity> : IBaseService<TEntity>
     where TEntity : class, new()
@@ -12,6 +12,7 @@ public class BaseService<TEntity> : IBaseService<TEntity>
     /// <summary>
     /// 从子类的构造函数中传入
     /// </summary>
+    // ReSharper disable once InconsistentNaming
     protected IBaseRepository<TEntity> _repository;
 #pragma warning restore CS8618 // 在退出构造函数时，不可为 null 的字段必须包含非 null 值。请考虑声明为可以为 null。
     public async Task<bool> CreatAsync(TEntity entity)

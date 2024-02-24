@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Mytally.Service.IService;
+using MyTally.Service.IService;
 using MyTally.WebApi.Utils.ApiResults;
 
 namespace MyTally.WebApi.Controllers;
@@ -21,11 +21,11 @@ public class UpdataFileController(IAccountBookDefService abds, IBillService bs) 
 
             string data = streamReader.ReadToEnd();
             string name = formFile.FileName;
-            return ApiResultHeaper.Success(name);
+            return ApiResultHelper.Success(name);
         }
         catch (ArgumentException e)
         {
-            return ApiResultHeaper.Error($"上传失败: {e.Message}");
+            return ApiResultHelper.Error($"上传失败: {e.Message}");
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Mytally.Models;
-using Mytally.Service.IService;
+using MyTally.Models;
+using MyTally.Service.IService;
 using MyTally.WebApi.Utils.ApiResults;
 
 namespace MyTally.WebApi.Controllers;
@@ -14,64 +14,57 @@ public class BillController(IBillService ibillService) : ControllerBase
     [HttpGet("/Bill/GetAll")]
     public async Task<ActionResult<ApiResult>> GetAllAsync()
     {
-        List<Bill>? data = await _ibillService.QueryAsync(it => !it.IsDelete);
-        if (data == null)
-            return ApiResultHeaper.Error("查询失败");
-        if (data.Count == 0)
-            return ApiResultHeaper.Error("数据库无数据");
-        if (data.Count >= 100)
-            return ApiResultHeaper.Error("数量过多，使用分页查询");
-
-        return ApiResultHeaper.Success(data);
+        var data = await _ibillService.QueryAsync(it => !it.IsDelete);
+        return data.Count switch
+        {
+            0 => ApiResultHelper.Error("数据库无数据"),
+            >= 100 => ApiResultHelper.Error("数量过多，使用分页查询"),
+            _ => ApiResultHelper.Success(data)
+        };
     }
 
     [HttpGet("/Bill/SearchWithYear")]
     public async Task<ActionResult<ApiResult>> GetAllInMonth(int year)
     {
-        List<Bill>? data = await _ibillService.QueryAsync(it => it.CreatDataTime.Year == year);
-        if (data == null)
-            return ApiResultHeaper.Error("查询失败");
-        if (data.Count == 0)
-            return ApiResultHeaper.Error("数据库无数据");
-        if (data.Count >= 100)
-            return ApiResultHeaper.Error("数量过多，使用分页查询");
-
-        return ApiResultHeaper.Success(data);
+        var data = await _ibillService.QueryAsync(it => it.CreatDataTime.Year == year);
+        return data.Count switch
+        {
+            0 => ApiResultHelper.Error("数据库无数据"),
+            >= 100 => ApiResultHelper.Error("数量过多，使用分页查询"),
+            _ => ApiResultHelper.Success(data)
+        };
     }
 
     [HttpGet("/Bill/SearchWithMonth")]
     public async Task<ActionResult<ApiResult>> GetAllInMonth(int year, int month)
     {
-        List<Bill>? data = await _ibillService.QueryAsync(
+        var data = await _ibillService.QueryAsync(
             it => it.CreatDataTime.Year == year && it.CreatDataTime.Month == month
         );
-        if (data == null)
-            return ApiResultHeaper.Error("查询失败");
-        if (data.Count == 0)
-            return ApiResultHeaper.Error("数据库无数据");
-        if (data.Count >= 100)
-            return ApiResultHeaper.Error("数量过多，使用分页查询");
 
-        return ApiResultHeaper.Success(data);
+        return data.Count switch
+        {
+            0 => ApiResultHelper.Error("数据库无数据"),
+            >= 100 => ApiResultHelper.Error("数量过多，使用分页查询"),
+            _ => ApiResultHelper.Success(data)
+        };
     }
 
     [HttpGet("/Bill/SearchWithDay")]
     public async Task<ActionResult<ApiResult>> GetAllInDay(int year, int month, int day)
     {
-        List<Bill>? data = await _ibillService.QueryAsync(
+        var data = await _ibillService.QueryAsync(
             it =>
                 it.CreatDataTime.Year == year
-                && it.CreatDataTime.Month == month
-                && it.CreatDataTime.Day == day
+             && it.CreatDataTime.Month == month
+             && it.CreatDataTime.Day == day
         );
-        if (data == null)
-            return ApiResultHeaper.Error("查询失败");
-        if (data.Count == 0)
-            return ApiResultHeaper.Error("数据库无数据");
-        if (data.Count >= 100)
-            return ApiResultHeaper.Error("数量过多，使用分页查询");
-
-        return ApiResultHeaper.Success(data);
+        return data.Count switch
+        {
+            0 => ApiResultHelper.Error("数据库无数据"),
+            >= 100 => ApiResultHelper.Error("数量过多，使用分页查询"),
+            _ => ApiResultHelper.Success(data)
+        };
     }
 
     //[HttpPost("/Bill")]
@@ -108,18 +101,14 @@ public class BillController(IBillService ibillService) : ControllerBase
     //    {
     //        b.ReimbursementAmount = reimbursementAmount;
     //    }
-    //    return ApiResultHeaper.Success("添加成功");
+    //    return ApiResultHelper.Success("添加成功");
     //}
     [HttpDelete("/Bill/D")]
     public async Task<ActionResult<ApiResult>> DeleteAsync(int id)
     {
-        Bill bill = await _ibillService.FindAsync(id);
-        if (bill == null)
-            return ApiResultHeaper.Error("未找到");
+        var bill = await _ibillService.FindAsync(id);
         bill.IsDelete = true;
-        bool b = await _ibillService.EditAsync(bill);
-        if (!b)
-            return ApiResultHeaper.Error("修改失败");
-        return ApiResultHeaper.Success("删除成功");
+        var b = await _ibillService.EditAsync(bill);
+        return b ? ApiResultHelper.Success("删除成功") : ApiResultHelper.Error("修改失败");
     }
 }

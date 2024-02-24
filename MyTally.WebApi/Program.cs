@@ -1,11 +1,8 @@
-using Mytally.Repository.IRepository;
-using Mytally.Repository.Repository;
-using Mytally.Service.IService;
-using Mytally.Service.Servce;
-using SqlSugar;
+using MyTally.Repository.IRepository;
+using MyTally.Repository.Repository;
+using MyTally.Service.IService;
 using SqlSugar.IOC;
-using System.Configuration;
-using System.Runtime.CompilerServices;
+using MyTally.Service.Service;
 
 namespace MyTally.WebApi;
 
@@ -29,15 +26,15 @@ public class Program
             {
                 ConnectionString = "Server=localhost;Database=MyTallyDB;Integrated Security=True;",
                 DbType = IocDbType.SqlServer,
-                IsAutoCloseConnection = true // ×Ô¶¯ÊÍ·Å
+                IsAutoCloseConnection = true // è‡ªåŠ¨é‡Šæ”¾
             }
         );
 
         #endregion
 
-        #region ×ÔÉí·şÎñµÄIOC
+        #region è‡ªèº«æœåŠ¡çš„IOC
 
-        builder.Services.AddCustomIOC();
+        builder.Services.AddCustomIoc();
 
         #endregion
 
@@ -59,18 +56,18 @@ public class Program
     }
 }
 
-public static class IOCExtend
+public static class IocExtend
 {
-    public static IServiceCollection AddCustomIOC(this IServiceCollection service)
+    public static IServiceCollection AddCustomIoc(this IServiceCollection service)
     {
-        // ²Ö´¢²ãÒÀÀµ×¢Èë
+        // ä»“å‚¨å±‚ä¾èµ–æ³¨å…¥
         service.AddScoped<IAccountBookDefRespository, AccountBookDefRespository>();
         service.AddScoped<IBillRespository, BillRespository>();
         service.AddScoped<ITagDefRespository, TagDefRepository>();
         service.AddScoped<ITagListRespository, TagListRepository>();
         service.AddScoped<ITypeInfoDefRespository, TypeInfoDefRepository>();
 
-        // ·şÎñ²ãÒÀÀµ×¢Èë
+        // æœåŠ¡å±‚ä¾èµ–æ³¨å…¥
         service.AddScoped<IAccountBookDefService, AccountBookDefService>();
         service.AddScoped<IBillService, BillService>();
         service.AddScoped<ITagDefService, TagDefService>();

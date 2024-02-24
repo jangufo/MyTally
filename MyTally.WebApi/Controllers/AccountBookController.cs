@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Mytally.Models;
-using Mytally.Service.IService;
+using MyTally.Models;
+using MyTally.Service.IService;
 using MyTally.WebApi.Utils.ApiResults;
 
 namespace MyTally.WebApi.Controllers;
@@ -19,15 +19,13 @@ public class AccountBookController(IAccountBookDefService accountBookDefService)
     [HttpGet("/AccountBook/GetAll")]
     public async Task<ActionResult<ApiResult>> GetAllAsync()
     {
-        List<AccountBookDef>? data = await _iAccountBookDefService.QueryAsync();
-        if (data == null)
-            return ApiResultHeaper.Error("查询失败");
-        if (data.Count == 0)
-            return ApiResultHeaper.Error("数据库无数据");
-        if (data.Count >= 100)
-            return ApiResultHeaper.Error("数量过多，使用分页查询");
-
-        return ApiResultHeaper.Success(data);
+        var data = await _iAccountBookDefService.QueryAsync();
+        return data.Count switch
+        {
+            0 => ApiResultHelper.Error("数据库无数据"),
+            >= 100 => ApiResultHelper.Error("数量过多，使用分页查询"),
+            _ => ApiResultHelper.Success(data)
+        };
     }
 
     ///// <summary>
@@ -51,7 +49,7 @@ public class AccountBookController(IAccountBookDefService accountBookDefService)
     //    }
     //    var data = await _iAccountBookDefService.CreatAsync(accountBookDef);
     //    if (!data)
-    //        return ApiResultHeaper.Error("数据库插入失败");
-    //    return ApiResultHeaper.Success(data);
+    //        return ApiResultHelper.Error("数据库插入失败");
+    //    return ApiResultHelper.Success(data);
     //}
 }

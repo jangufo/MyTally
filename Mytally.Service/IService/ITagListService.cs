@@ -1,5 +1,5 @@
-﻿using Mytally.Models;
+﻿using MyTally.Models;
 
-namespace Mytally.Service.IService;
+namespace MyTally.Service.IService;
 
 public interface ITagListService : IBaseService<TagList> { }
